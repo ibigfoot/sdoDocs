@@ -1,8 +1,7 @@
-console.log('~~background.js');
 
 var url = '';
-var forceDotCom = /salesforce.com/;
-	
+var forceDotCom = /force.com/;
+var tabId = '';
 chrome.tabs.onActivated.addListener(function(evt){ 
 	chrome.tabs.get(evt.tabId, function(tab){
 		if(url != tab.url) {
@@ -21,11 +20,27 @@ chrome.tabs.onUpdated.addListener(function(evt){
 
 function processTab(tab) {
 	url = tab.url;
-	console.log(JSON.stringify(tab));
+	console.log('TAB ID ['+tab.id+']');
+	if(tab.id != null) {
+		tabId = tab.id;
+	}
 	if(forceDotCom.exec(tab.url) != null){
-		chrome.browserAction.enable();
-		console.log('have sfdc URL');
+		chrome.pageAction.show(tabId);
 	} else {
-		chrome.browserAction.disable();
+		chrome.pageAction.hide(tabId);
 	}
 }
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+
+	if(request.hasOwnProperty('action')) {
+		if(request.action == 'clearBadge') {
+			chrome.pageAction.setIcon({tabId:tabId, path:'qbranchLogo.png'});
+		}
+		if(request.action == 'setKnowledge') {
+			chrome.pageAction.setPopup({popup: "kbDetails.html?p1="+request.greeting, tabId:tabId});
+			chrome.pageAction.setIcon({tabId:tabId, path:'qbranchLogoKB.png'});	
+		}
+		
+	}
+});

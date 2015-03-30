@@ -5,13 +5,19 @@
   "description": "This extension allows a user to explore the Salesforce SDO and get the best demo click path at a glance",
   "version": "1.0",
 
-  "browser_action": {
+  "page_action": {
     "default_icon": "qbranchLogo.png",
     "default_popup": "sdoInspector.html"
   },
   "background": {
     "scripts": ["background.js"]
   },
+  "content_scripts": [
+  	{
+  		"matches":["https://*.salesforce.com/*","https://*.visual.force.com/*"],
+  		"js":["content.js"]
+  	}
+  ],
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
