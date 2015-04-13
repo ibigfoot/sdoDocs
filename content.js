@@ -1,2 +1,4 @@
 
-chrome.runtime.sendMessage({action:"setKnowledge",greeting:"hellooo!!"});
+//chrome.runtime.sendMessage({action:"setKnowledge",greeting:"hellooo!!"});
+
+

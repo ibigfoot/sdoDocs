@@ -1,5 +1,15 @@
 // js to fetch and display knowledge articles.
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if(request.hasOwnProperty('action')) {
+		if(request.action == 'foundArticle') {
+			
+			
+		}
+	}
+});
+
+
 document.getElementById("content").textContent = getParameter("p1");
 console.log('LOADED');
 
