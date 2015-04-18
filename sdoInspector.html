@@ -12,5 +12,12 @@ renders knowledge articles.
 <br />
 Maybe some lovely stuff about Q-Branch in here as well.
 </div>
+<div id="articles">
+	<ul id="articleList" data-bind="template:{ name:'articleTemplate', foreach:records}"></ul>
+	<script type="text/html" id="knowledge-template">
+		<span data-bind="text: name"></span></li>
+	</script>
+</div>
+<script type="text/javascript" src="kb.js"></script>
 </body>
 </html>

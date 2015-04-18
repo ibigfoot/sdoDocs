@@ -1,28 +1,9 @@
-// js to fetch and display knowledge articles.
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if(request.hasOwnProperty('action')) {
-		if(request.action == 'foundArticle') {
-			
-			
-		}
-	}
-});
-
-
-document.getElementById("content").textContent = getParameter("p1");
-console.log('LOADED');
-
-chrome.runtime.sendMessage({action:"clearBadge"});
-
-function getParameter(theParameter) { 
-	  var params = window.location.search.substr(1).split('&');
-	 
-	  for (var i = 0; i < params.length; i++) {
-	    var p=params[i].split('=');
-		if (p[0] == theParameter) {
-		  return decodeURIComponent(p[1]);
-		}
-	  }
-	  return false;
+window.onload = function() {
+	
+	// get article content from background
+	var article = chrome.extension.getBackgroundPage().articleContent;
+	var records = chrome.extension.getBackgroundPage().articleContent.records;
+	
+	
 }

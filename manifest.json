@@ -11,7 +11,7 @@
     "default_popup": "sdoInspector.html"
   },
   "background": {
-    "scripts": ["jquery.min.js","background.js"]
+    "scripts": ["jquery.min.js","knockout.js","background.js"]
   },
   "content_scripts": [
   	{
@@ -22,8 +22,10 @@
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
+    "https://*.salesforce.com/",
     "tabs",
     "storage",
     "cookies"
-  ]
+  ],
+  "content_security_policy": "script-src 'self'; connect-src https://*.salesforce.com; default-src 'self'"
 }
