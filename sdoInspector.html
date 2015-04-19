@@ -1,23 +1,24 @@
-<html>
+<html data-ng-app="inspectorApp" ng-csp>
 <head>
 <title>QBranch SDO Inspector</title>
-<link rel="stylesheet" type="text/css" href="sdo.css">
+<link rel="stylesheet" type="text/css" href="css/sdo.css">
+<link rel="stylesheet" type="text/css" href="css/angular-csp.css">
 </head>
-<body>
+<body data-ng-controller="ArticleController as ctrl">
 <h1>SDO Inspector</h1>
-<div class="container">
+<div class="container" data-ng-hide="haveArticles">
 Here is the content that will explain what this tool is, why it is used and probably links on how to configure it. 
 There is going to be no content here, it will actually be a different page when the javascript that does most of the heavy lifting 
 renders knowledge articles. 
-<br />
-Maybe some lovely stuff about Q-Branch in here as well.
 </div>
 <div id="articles">
-	<ul id="articleList" data-bind="template:{ name:'articleTemplate', foreach:records}"></ul>
-	<script type="text/html" id="knowledge-template">
-		<span data-bind="text: name"></span></li>
-	</script>
+	<div data-ng-repeat="article in articles">
+		<div class="title">{{article.Title}}</div>
+		<div class="summary">{{article.Summary}}</div>
+		<span data-ng-bind-html="article.Hint__c"></span>
+	</div>
 </div>
-<script type="text/javascript" src="kb.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/kb.js"></script>
 </body>
 </html>

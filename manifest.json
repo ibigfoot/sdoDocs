@@ -7,18 +7,12 @@
   "options_page":"options.html",
   
   "page_action": {
-    "default_icon": "qbranchLogo.png",
+    "default_icon": "img/qbranchLogo.png",
     "default_popup": "sdoInspector.html"
   },
   "background": {
-    "scripts": ["jquery.min.js","knockout.js","background.js"]
+    "scripts": ["js/jquery.min.js","js/background.js"]
   },
-  "content_scripts": [
-  	{
-  		"matches":["https://*.salesforce.com/*","https://*.visual.force.com/*"],
-  		"js":["content.js"]
-  	}
-  ],
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",

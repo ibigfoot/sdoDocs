@@ -63,9 +63,7 @@ function processTab(tab) {
 }
 
 function findArticle(tab) {
-	console.log(JSON.stringify(tab));
 	if(session == null || session.access_token == null) {
-		console.log('~~authenticating');
 		var apiCall = 'https://login.salesforce.com/services/oauth2/token?';
 		apiCall += 'grant_type=password&client_id='+client_id+'&client_secret='+client_secret+'&username=tsellers@qbranch.org&password=Demo1234';
 	
@@ -79,12 +77,9 @@ function findArticle(tab) {
 		};
 		postAjax(url, data).success(function(result) {
 			session = result;
-			console.log('~~ Result of logging in~~~');
-			console.log(JSON.stringify(result));
 			getKB(tab);
 		});		
 	} else {
-		console.log('~~already authenticated');
 		getKB(tab);
 	}
 }
@@ -99,7 +94,11 @@ function getKB(tab) {
 		query += ' AND setupid__c=\''+unpackedURL.setupid+'\'';
 	}
 	getAjax(query).success(function(result) {
-		console.log(JSON.stringify(result));
+		if(result.totalSize > 0) {
+			chrome.pageAction.setIcon({tabId: tab.id, path:"img/qbranchLogoKB.png"});;
+		} else {
+			chrome.pageAction.setIcon({tabId: tab.id, path:"img/qbranchLogo.png"});;
+		}	
 		articleContent = result;
 	});
 }
@@ -151,22 +150,3 @@ function getAjax(url) {
 }
 
 
-/*
- * Message published from content.js. 
- */
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	if(request.hasOwnProperty('type')) {
-		if(request.type == 'popupOpen') {
-			chrome.runtime.sendMessage({article: articleContent});
-		}
-	};
-	if(request.hasOwnProperty('action')) {
-		if(request.action == 'clearBadge') {
-			chrome.pageAction.setIcon({tabId:tabId, path:'qbranchLogo.png'});
-		}
-		if(request.action == 'setKnowledge') {
-			chrome.pageAction.setPopup({popup: "kbDetails.html?p1="+request.greeting, tabId:tabId});
-			chrome.pageAction.setIcon({tabId:tabId, path:'qbranchLogoKB.png'});	
-		}	
-	}
-});
